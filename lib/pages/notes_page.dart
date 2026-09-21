@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import '../app_router.dart';
 import '../cubit/notes_cubit.dart';
 import '../cubit/notes_state.dart';
@@ -61,11 +62,18 @@ class _NotesPageState extends State<NotesPage> {
 
   Widget emptyView() {
     return Center(
-      child: IntrinsicWidth(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Lottie.asset(
+              'assets/todolist.json',
+              width: 220,
+              height: 220,
+              repeat: true,
+            ),
+            const SizedBox(height: 12),
             const Text(
               'Заметок пока нет',
               textAlign: TextAlign.center,
