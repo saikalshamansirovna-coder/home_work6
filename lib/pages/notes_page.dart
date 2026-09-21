@@ -32,12 +32,56 @@ class _NotesPageState extends State<NotesPage> {
     context.router.push(const SettingsRoute());
   }
 
-  void addNote() async {
+  void showAddSuccessAnimation() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        Future.delayed(const Duration(milliseconds: 1200), () {
+          if (Navigator.of(dialogContext).canPop()) {
+            Navigator.of(dialogContext).pop();
+          }
+        });
+
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(dialogContext).colorScheme.surface,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Lottie.asset(
+                    'assets/todolist.json',
+                    width: 180,
+                    height: 180,
+                    repeat: true,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Заметка добавлена',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> addNote() async {
     final saved = await showNoteDialog(context);
     if (saved && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar( 
         const SnackBar(content: Text('Заметка добавлена')),
       );
+      showAddSuccessAnimation();
     }
   }
 
